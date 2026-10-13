@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>World Builder</title>
+    <base href="/world-builder/" />
+    <meta name="description" content="Forge whole fantasy worlds: continents, climate, rivers, peoples, nations, cities and the stories in them, with a Dungeon Master's toolkit." />
+    <meta name="theme-color" content="#0d1117" />
+    <meta name="wb-build" content="20261013-1938" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href="icons/icon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+    <script>
+        // Use the remembered theme before anything is drawn, so the page never flashes the wrong colours.
+        try { var t = localStorage.getItem("wb.theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) { }
+    </script>
+    <link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+    <div id="app">
+        <div class="loading" role="status" aria-live="polite">
+            <img src="icons/icon.svg" width="72" height="72" alt="" />
+            <div class="loading-title">World Builder</div>
+            <div class="loading-bar"><span></span></div>
+            <div class="loading-text">Loading<span class="loading-pct"></span></div>
+            <div class="loading-note">The first visit downloads about 8 MB. After that it opens straight away, even offline.</div>
+        </div>
+    </div>
+    <div id="blazor-error-ui">
+        Something went wrong. <a href="" class="reload">Reload the page</a>
+    </div>
+    <script src="js/app.js"></script>
+    <script src="js/names.js"></script>
+    <script src="js/sketch.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/overlay.js"></script>
+    <script src="js/plan.js"></script>
+    <script src="js/globe.js"></script>
+    <script src="js/map.js"></script>
+    <script src="_framework/blazor.webassembly.js" autostart="false"></script>
+    <script>
+        // Stage 8: start the app. Online, the engine's files are fetched in their gzip-packed form (a third of the size) and unpacked
+        // here, because the free host does not pack them itself; anything that goes wrong falls back to the plain file.
+        (function () {
+            var local = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+            var packed = !local && typeof DecompressionStream === "function";
+            var started = Blazor.start({
+                loadBootResource: function (type, name, defaultUri, integrity) {
+                    if (!packed || type === "dotnetjs" || type === "configuration" || type === "manifest") return null;
+                    return (async function () {
+                        try {
+                            var res = await fetch(defaultUri + ".gz", { cache: "no-cache" });
+                            if (!res.ok || !res.body) throw new Error(res.statusText);
+                            var body = res.body.pipeThrough(new DecompressionStream("gzip"));
+                            var kind = type === "dotnetwasm" || /\.wasm$/.test(name) ? "application/wasm" : "application/octet-stream";
+                            var bytes = await new Response(body).arrayBuffer();
+                            return new Response(bytes, { headers: { "content-type": kind } });
+                        } catch (e) {
+                            return fetch(defaultUri, { cache: "no-cache", integrity: integrity });
+                        }
+                    })();
+                }
+            });
+            // offline once opened, and an offer to reload when a new version has arrived (not while trying it out on this computer)
+            if ("serviceWorker" in navigator && !local) {
+                // once the app is running, every file it loaded is handed to the offline copy (see service-worker.js)
+                Promise.resolve(started).then(function () { return navigator.serviceWorker.ready; }).then(function (reg) {
+                    setTimeout(function () {
+                        var urls = performance.getEntriesByType("resource").map(function (e) { return e.name; })
+                            .filter(function (u) { return u.indexOf(location.origin) === 0; });
+                        urls.push(location.href.split("#")[0]);
+                        if (reg.active) reg.active.postMessage({ keep: urls });
+                    }, 4000);
+                }).catch(function () { });
+                navigator.serviceWorker.register("service-worker.js").then(function (reg) {
+                    if (window.wb) window.wb.watchUpdates(reg);
+                    // a newer offline copy that arrived earlier and is still waiting (the last page was closed without reloading)
+                    if (reg.waiting && navigator.serviceWorker.controller && window.wb)
+                        window.wb.version().then(function (v) { if (!v || v.build !== window.wb.build()) window.wb.offerUpdate(reg.waiting, v); else reg.waiting.postMessage("skip-waiting"); });
+                    reg.addEventListener("updatefound", function () {
+                        var w = reg.installing;
+                        if (!w) return;
+                        w.addEventListener("statechange", function () {
+                            // a newer offline copy arrived while an older one runs this page: offer it, unless this page is already the new version
+                            if (w.state === "installed" && navigator.serviceWorker.controller && window.wb)
+                                window.wb.version().then(function (v) { if (!v || v.build !== window.wb.build()) window.wb.offerUpdate(w, v); else w.postMessage("skip-waiting"); });
+                        });
+                    });
+                }).catch(function () { });
+            }
+        })();
+    </script>
+</body>
+</html>

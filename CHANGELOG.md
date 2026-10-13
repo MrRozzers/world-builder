@@ -1,0 +1,55 @@
+# World Builder: changelog
+
+Open it: https://mrrozzers.github.io/world-builder/
+
+## 0.9.5 - Mountains you can see (2026-10-13)
+
+- The painted map has new hill shading: light mainly from the north-west, with softer light from the west and north. It is strongest on high ground, so ranges, ridges and valleys stand out at every zoom while the lowlands stay calm.
+- Hand-drawn mountains in the style of an inked fantasy map, for the major peaks only: the named peak of each range and any other summit that stands well above everything around it. Each has a jagged ink ridge (often with a shoulder or a second peak), a spur line down from the tip and stippled shading on its shadowed side, on a parchment fill that fades into the land. They appear once you zoom in (from about 250%), stay a steady size on screen, keep clear of the sea, lakes, big rivers and settlements, and fade out when you zoom in close. To turn them off, untick Mountain symbols (under Terrain in the browser's Layers, or Map display on the desktop).
+- Worlds are unchanged: the same seed gives the same land. Only the way it is drawn is new.
+
+## 0.9.4 - Settlements laid out more sensibly (2026-10-12)
+
+- Fields now lie along the roads out of a settlement, in rows set back from the road and lined up with it, as farmland does. A field never crosses a road, a lane, a river, the shore, a house or another field.
+- Roads bend round the sea and lakes instead of running into them; a road that would have to turn back ends at the shore. Where a road crosses a river there is a bridge (towns, and anywhere with a bridge of its own) or a ford of stepping stones.
+- Hamlets and lone dwellings line the road through them, and no house stands on a road. Streets and lanes stop at the river's edge.
+- A settlement by the sea or a lake can have its river too, running down into the water, so a port town's bridge now crosses a real river.
+- Buildings stand where they belong: inns, smithies and barracks by the road, lookouts on a road just outside, barns and windmills by the fields, a water mill on the river.
+
+## 0.9.3 - Clearer settlement sketches, proper character sheets, your choice of units (2026-10-12)
+
+- Units: choose Metric or US customary in Settings (or from search: "units"). Every distance, area, height, temperature, rainfall and wind speed on the cards, the legend, the map's scale bar, the hover line and the settlement sketches follows it. Game rules keep their feet and pounds.
+- Real measures instead of percentages: heights are given above sea level ("about 1,250 m" or "about 4,100 ft"), sea depths in metres or feet, a nation's land as an area, its frontiers as lengths of border, and a plague's toll as a number of people. Magic strength and a people's attitude to magic are given in words only.
+- Settlement sketches: building letters no longer cover district names or each other; the castle stands in Castle Hill and the temple in the Temple Quarter; in villages and hamlets the buildings stand among the houses, not out in the fields.
+- Sketches show their streets: lanes through every city district, a clear street along a street village, dirt lanes in villages and hamlets, and a lane by a river runs along the bank. Houses keep off the water's edge and fields no longer overlap.
+- Sketches look more like maps: a castle's curtain wall and towers, a temple's footprint, varied roofs with shadows, furrowed fields with hedges, sandy shores and river banks, towers along stone walls, a scale bar and a north arrow (the desktop app draws them the same way).
+- Larger on a settlement's sketch opens it big over the page; Save picture and Copy make a large picture with a key of the lettered buildings (G1, G2... where letters repeat), for the table or a VTT.
+- Character sheets look like character sheets: armour class, initiative, speed and proficiency badges, a hit points box with a bar and hit dice, six ability boxes with their saves, all eighteen skills with proficiency dots and passive Perception, and an attacks table. Print opens the sheet on its own page to print or save as a PDF.
+- With the trade layer on, trade flows along the roads and sea routes in teal, wider where it is busier, as in the desktop app.
+- Floor plans on phones: pinch to zoom (or Ctrl and the mouse wheel), with zoom buttons and Fit; choose how big each 5-foot square is in the saved or copied picture to match your VTT's grid (50, 70, 100 or 140 pixels).
+- Desktop app: right-click a settlement's sketch for a larger view or to save it as a picture.
+- Accessibility checks: the top bar, layer chips and clock are labelled areas for screen readers, search reports its results properly when nothing matches, character sheets say which skills and saves are proficient, and grey text in the light look is a little darker so it is easier to read.
+- Trade flows are drawn in a few batches instead of route by route, so the map stays smooth with the trade layer on.
+
+## 0.9.2 - Lairs with their own names, and better search (2026-10-12)
+
+- No two lairs or camps share a name any more. A world could have two "The Hollow Troll-den"s, so a town's Dangers nearby could link to the wrong one, far away. The second of a pair now gets another name ("The Raven Troll-den"); every other lair is unchanged. (If you had changed the floor plan of one of those few renamed lairs, its plan starts afresh.)
+- Lairs you add in the Edit drawer without a name get a number if their made-up name is taken.
+- Search finds names with hyphens from the words you type: "hollow troll den" finds The Hollow Troll-den, and the words can come in any order ("troll hollow").
+- Search shows up to 12 results instead of 8, so a lair among many with similar names is not left off the list.
+
+## 0.9.1 - Updates you can see (2026-10-11)
+
+- A note now appears while you are using the map when a new version has been published, with a Reload button. It checks every few minutes and when you come back to the tab.
+- The version number is shown in Settings, and What's new (the icon at the top right) lists the changes, with a dot when there is something new. The same list is on GitHub (CHANGELOG.md in the world-builder repository).
+
+## 0.9.0 - First version online (2026-10-10)
+
+- World Builder in the browser, with nothing to install: the same worlds as the desktop app from the same seed, and the same save files.
+- The map: painted close-up, layers, names, roads, the minimap, search, cards for everything, settlement sketches, notes and character sheets.
+- My worlds: worlds kept in the browser as you go, saved, downloaded and opened from files (desktop saves too).
+- The Dungeon Master's tools: the clock and weather, the party and its travels, encounters and the library, monsters, quick generators, treasure, world events, floor plans.
+- Changing the world: the Edit drawer, pins, bookmarks, Undo; the globe; measuring distances.
+- Installable, works offline once opened, a guide (How to use World Builder) and tips for the first world.
+- Fixed the same day: works offline properly after the very first visit, and making a world in a tab you are not looking at is as fast as in one you are.
+
